@@ -170,6 +170,8 @@ Perform better error management.
 Check that dependencies exist when creating or modifying an object.
 For exemple, when we create a People object, we don't check if the parameter homeworld_id corresponding to an existing object in database.
 
+Link films, starship, vehicles and species to a People
+
 # Known issues
 
 Relationships Many to Many between People and Species dosn't work.  

@@ -38,7 +38,7 @@ func TestPrepare(t *testing.T) {
 	}
 }
 
-func TestValidate(t *testing.T) {
+func TestValidateFailed(t *testing.T) {
 	people := models.People{
 		Gender:      "male",
 		HairColor:   "grey",
@@ -105,6 +105,21 @@ func TestValidate(t *testing.T) {
 		ID:          2,
 	}
 	err = people.Validate()
+
+	if err != nil {
+		t.Errorf("Validate(\"\") failed, expected %v, got %v", nil, err)
+	}
+}
+
+func TestValidateSuccess(t *testing.T) {
+	people := models.People{
+		Gender:      "male",
+		Name:        "Tony",
+		HomeworldID: 1,
+		URL:         2,
+		ID:          2,
+	}
+	err := people.Validate()
 
 	if err != nil {
 		t.Errorf("Validate(\"\") failed, expected %v, got %v", nil, err)
