@@ -1,12 +1,12 @@
 # API REST in GOLANG
 * [Installation](#Installation)
 * [Dependencies](#Dependencies)
-* [API List](#API_List)
-    * [Get people by id](#Get_people_by_id)
-    * [Get all peoples](#Get_all_peoples)
-    * [Create new people](#Create_new_people)
-    * [Update people](#Update_people)
-    * [Delete people](#Delete_people)
+* [API List](#api-list)
+    * [Get people by id](#get-people-by-id)
+    * [Get all peoples](#get-all-peoples)
+    * [Create new people](#create-new-people)
+    * [Update people](#update-people)
+    * [Delete people](#delete-people)
 * [Improvement](#improvement)
 
 # Installation
