@@ -1,7 +1,7 @@
 # API REST in GOLANG
 * [Installation](#Installation)
 * [Dependencies](#Dependencies)
-* [API List](#api_list)
+* [API List](#API_List)
     * [Get people by id](#Get_people_by_id)
     * [Get all peoples](#Get_all_peoples)
     * [Create new people](#Create_new_people)
