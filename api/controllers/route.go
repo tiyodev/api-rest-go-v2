@@ -3,6 +3,7 @@ package controllers
 import "github.com/tiyodev/api-rest-go-v1/api/middlewares"
 
 func (server *Server) initializeRoutes() {
+	server.Router.HandleFunc("/", middlewares.SetMiddlewareJSON(server.GetHome)).Methods("GET")
 	// people routes
 	server.Router.HandleFunc("/people/{id}", middlewares.SetMiddlewareJSON(server.GetPeople)).Methods("GET")
 	server.Router.HandleFunc("/peoples", middlewares.SetMiddlewareJSON(server.GetPeoples)).Methods("GET")

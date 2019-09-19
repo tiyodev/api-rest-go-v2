@@ -2,6 +2,7 @@
 * [Installation](#Installation)
 * [Dependencies](#Dependencies)
 * [API List](#api-list)
+    * [Get Home](#get-home)
     * [Get people by id](#get-people-by-id)
     * [Get all peoples](#get-all-peoples)
     * [Create new people](#create-new-people)
@@ -21,7 +22,7 @@ Run http server in local:
 # Dependencies
 In this project I use two external dependencies
   * [Gorilla mux](https://github.com/gorilla/mux)
-  * [GORM](https://github.com/jinzhu/gorm) 
+  * [GORM](https://github.com/jinzhu/gorm)
 
 Installation of Gorilla mux
   
@@ -32,6 +33,22 @@ Installation of GORM
     go get -u github.com/jinzhu/gorm
 
 # API List
+## Get Home
+### Request
+`GET /`
+
+    curl -i http://localhost:8080
+
+Check if the server is working properly.
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Date: Thu, 19 Sep 2019 12:55:53 GMT
+    Content-Length: 34
+
+    "Welcome to this GOLAND REST API"
 
 ## Get people by id
 ### Request
