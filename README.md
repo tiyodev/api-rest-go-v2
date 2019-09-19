@@ -20,6 +20,10 @@ Run http server in local:
 
     go run main.go
 
+Run People's tests located in models
+
+    go test github.com/tiyodev/api-rest-go-v1/api/models
+
 # Dependencies
 In this project I use two external dependencies
   * [Gorilla mux](https://github.com/gorilla/mux)
