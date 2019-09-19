@@ -1,7 +1,35 @@
+# API REST in GOLANG
+* [Installation](#installation)
+* [Dependencies](#dependencies)
+* [API List](#api_list)
+    * [Get people by id](#get_people)
+    * [Get all peoples](#get_all_people)
+    * [Create new people](#create_people)
+    * [Update people](#update_people)
+    * [Delete people](#delete_people)
+* [Improvement](improvement)
+
 # Installation
+Project recovery:
+
+    git clone https://github.com/tiyodev/api-rest-go-v1.git
+
+Run http server in local:
+
+    go run main.go
 
 # Dependencies
+In this project I use two external dependencies
+  * [Gorilla mux](https://github.com/gorilla/mux)
+  * [GORM](https://github.com/jinzhu/gorm) 
+
+Installation of Gorilla mux
   
+    go get -u github.com/gorilla/mux
+
+Installation of GORM
+
+    go get -u github.com/jinzhu/gorm
 
 # API List
 
@@ -84,7 +112,7 @@
 ### Body
 
 | params name | params value | required | 
-| :---------- |:-------------| :--------| :--------|
+| :---------- |:-------------| :--------|
 | name | string | false |
 | homeworld_id | int | false |
 | height | string | false |
@@ -111,8 +139,9 @@
 
 # Improvement
 
-PLus de test
+Add unit tests.
 
-Une meilleur gestion des erreurs
+Perform better error management.
 
-Vérification qu'à la création ou l'update les relations exists (par exemple homeworld)
+Check that dependencies exist when creating or modifying an object.
+For exemple, when we create a People object, we don't check if the parameter homeworld_id corresponding to an existing object in database.
