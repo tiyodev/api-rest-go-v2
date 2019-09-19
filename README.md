@@ -2,11 +2,11 @@
 * [Installation](#Installation)
 * [Dependencies](#Dependencies)
 * [API List](#api_list)
-    * [Get people by id](#get_people)
-    * [Get all peoples](#get_all_people)
-    * [Create new people](#create_people)
-    * [Update people](#update_people)
-    * [Delete people](#delete_people)
+    * [Get people by id](#Get_people_by_id)
+    * [Get all peoples](#Get_all_peoples)
+    * [Create new people](#Create_new_people)
+    * [Update people](#Update_people)
+    * [Delete people](#Delete_people)
 * [Improvement](#improvement)
 
 # Installation
