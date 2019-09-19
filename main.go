@@ -16,6 +16,7 @@ var server = controllers.Server{}
 func run(addr string) {
 	var errDb error
 
+	// Database connection
 	server.DB, errDb = gorm.Open("sqlite3", "db/swapi.dat")
 	if errDb != nil {
 		log.Fatal(errDb)
@@ -23,10 +24,12 @@ func run(addr string) {
 		fmt.Println("Successful connection to the database")
 	}
 
+	// Initialise HTTP router
 	server.InitializeRoute()
 
 	fmt.Println("Listening to port 8080")
 
+	// Run HTTP server
 	errSrv := http.ListenAndServe(":8080", server.Router)
 	if errSrv != nil {
 		log.Fatal(errSrv)

@@ -85,6 +85,7 @@ func FindLastPeopleID(db *gorm.DB) (uint64, error) {
 
 // FindPeopleByID find People by id
 func FindPeopleByID(db *gorm.DB, uid uint64) (*People, error) {
+	// Preload people relations and get first people by ID
 	var u People
 	err := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(People{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
@@ -96,11 +97,11 @@ func FindPeopleByID(db *gorm.DB, uid uint64) (*People, error) {
 	return &u, err
 }
 
-// FindAllUsers find all peoples
-func FindAllUsers(db *gorm.DB, limit uint64, offset uint64) (*[]People, error) {
+// FindAllPeoples find all peoples
+func FindAllPeoples(db *gorm.DB, limit uint64, offset uint64) (*[]People, error) {
 	var peoples []People
 
-	// create a new relation
+	// Preload people relations and get all people
 	query := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(People{})
 
 	// Add limit filter if needed

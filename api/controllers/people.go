@@ -14,8 +14,8 @@ import (
 
 // GetPeople : get people by id
 func (server *Server) GetPeople(resWriter http.ResponseWriter, req *http.Request) {
-
 	vars := mux.Vars(req)
+	// Get URL ID parameter
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusBadRequest, err)
@@ -33,6 +33,7 @@ func (server *Server) GetPeople(resWriter http.ResponseWriter, req *http.Request
 
 // GetPeoples : get all peoples with optional limit and offset
 func (server *Server) GetPeoples(resWriter http.ResponseWriter, req *http.Request) {
+	// Get Limit and Offset optional URL params
 	params := req.URL.Query()
 	limit, err := strconv.ParseUint(params.Get("limit"), 10, 64)
 	offset, err := strconv.ParseUint(params.Get("offset"), 10, 64)
@@ -42,7 +43,7 @@ func (server *Server) GetPeoples(resWriter http.ResponseWriter, req *http.Reques
 		return
 	}
 
-	peoples, err := models.FindAllUsers(server.DB, limit, offset)
+	peoples, err := models.FindAllPeoples(server.DB, limit, offset)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusInternalServerError, err)
 		return
@@ -52,6 +53,7 @@ func (server *Server) GetPeoples(resWriter http.ResponseWriter, req *http.Reques
 
 // CreatePeople : create a new people
 func (server *Server) CreatePeople(resWriter http.ResponseWriter, req *http.Request) {
+	// Get all HTTP body params
 	body, err := ioutil.ReadAll(req.Body)
 	fmt.Println(body)
 	if err != nil {
@@ -64,7 +66,7 @@ func (server *Server) CreatePeople(resWriter http.ResponseWriter, req *http.Requ
 	// Generate default value
 	people.Prepare()
 
-	// init body with json body
+	// init people with HTTP body params
 	err = json.Unmarshal(body, &people)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusUnprocessableEntity, err)
@@ -147,11 +149,10 @@ func (server *Server) UpdatePeople(resWriter http.ResponseWriter, req *http.Requ
 
 // DeletePeople : remove people
 func (server *Server) DeletePeople(resWriter http.ResponseWriter, req *http.Request) {
-
 	vars := mux.Vars(req)
-
 	people := models.People{}
 
+	// Get URL ID parameter
 	uid, err := strconv.ParseUint(vars["id"], 10, 64)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusBadRequest, err)

@@ -168,3 +168,9 @@ Perform better error management.
 
 Check that dependencies exist when creating or modifying an object.
 For exemple, when we create a People object, we don't check if the parameter homeworld_id corresponding to an existing object in database.
+
+# Known issues
+
+Relationships Many to Many between People and Species dosn't work.  
+For exemple when I get one People By Id, I Preload Species entities but in the response 
+there are not spacies.
