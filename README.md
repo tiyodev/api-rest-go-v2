@@ -178,6 +178,6 @@ Link films, starship, vehicles and species to a People
 
 # Known issues
 
-Relationships Many to Many between People and Species dosn't work.  
+Relationships Many to Many between People and Species doesn't work.  
 For exemple when I get one People By Id, I Preload Species entities but in the response 
 there are not spacies.
