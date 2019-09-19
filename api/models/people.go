@@ -66,6 +66,10 @@ func (people *People) Validate() error {
 	if people.ID < 1 {
 		return errors.New("Required ID")
 	}
+
+	if people.ID != people.URL {
+		return errors.New("ID and URL must be equal")
+	}
 	return nil
 }
 

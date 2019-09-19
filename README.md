@@ -98,6 +98,10 @@ Check if the server is working properly.
 
 ### Body
 
+Before create a new People, we get automaticaly the last ID present in the database.  
+We increment this ID by 1 and we initialize URL field with the same value.  
+Finaly we use this ID and URL to create the Customer.  
+
 | params name | params value | default value | required | 
 | :---------- |:-------------| :--------| :--------|
 | name | string | unknown | false |
@@ -156,7 +160,9 @@ Check if the server is working properly.
 
 # Improvement
 
-Add unit tests.
+Add unit tests:
+* Test HTTP EndPoint
+* Test DataBase CRUD
 
 Perform better error management.
 
