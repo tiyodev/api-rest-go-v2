@@ -1,13 +1,13 @@
 # API REST in GOLANG
-* [Installation](#installation)
-* [Dependencies](#dependencies)
+* [Installation](#Installation)
+* [Dependencies](#Dependencies)
 * [API List](#api_list)
     * [Get people by id](#get_people)
     * [Get all peoples](#get_all_people)
     * [Create new people](#create_people)
     * [Update people](#update_people)
     * [Delete people](#delete_people)
-* [Improvement](improvement)
+* [Improvement](#improvement)
 
 # Installation
 Project recovery:
