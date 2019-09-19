@@ -9,6 +9,7 @@
     * [Update people](#update-people)
     * [Delete people](#delete-people)
 * [Improvement](#improvement)
+* [Known issues](#known_issues)
 
 # Installation
 Project recovery:
