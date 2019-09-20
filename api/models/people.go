@@ -77,24 +77,21 @@ func (people *People) Validate() error {
 func FindLastPeopleID(db *gorm.DB) (uint64, error) {
 	var people People
 	err := db.Debug().Select("cast(id as int) id").Order("id DESC").Model(People{}).First(&people).Error
-	if err != nil {
-		return people.ID, err
-	}
 	return people.ID, err
 }
 
 // FindPeopleByID find People by id
 func FindPeopleByID(db *gorm.DB, uid uint64) (*People, error) {
 	// Preload people relations and get first people by ID
-	var u People
-	err := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(People{}).Where("id = ?", uid).Take(&u).Error
+	var people People
+	err := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(People{}).Where("id = ?", uid).Take(&people).Error
 	if err != nil {
 		return &People{}, err
 	}
 	if gorm.IsRecordNotFoundError(err) {
 		return &People{}, errors.New("People Not Found")
 	}
-	return &u, err
+	return &people, err
 }
 
 // FindAllPeoples find all peoples
