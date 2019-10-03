@@ -65,17 +65,6 @@ func TestValidateFailed(t *testing.T) {
 		Gender:      "male",
 		Name:        "Tony",
 		HomeworldID: 1,
-	}
-	err = people.Validate()
-
-	if err == nil {
-		t.Errorf("Validate(\"\") failed, expected %v, got %v", "Required URL", err)
-	}
-
-	people = models.People{
-		Gender:      "male",
-		Name:        "Tony",
-		HomeworldID: 1,
 		URL:         2,
 	}
 	err = people.Validate()
