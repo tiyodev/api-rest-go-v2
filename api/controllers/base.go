@@ -5,7 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"github.com/tiyodev/api-rest-go-v1/api/responses"
+	"github.com/tiyodev/api-rest-go-v2/api/responses"
 )
 
 // Server struct

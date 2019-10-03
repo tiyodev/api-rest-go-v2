@@ -3,7 +3,7 @@ package models_test
 import (
 	"testing"
 
-	"github.com/tiyodev/api-rest-go-v1/api/models"
+	"github.com/tiyodev/api-rest-go-v2/api/models"
 )
 
 func TestTableName(t *testing.T) {

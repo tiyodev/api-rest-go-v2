@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/tiyodev/api-rest-go-v1/api/models"
-	"github.com/tiyodev/api-rest-go-v1/api/responses"
+	"github.com/tiyodev/api-rest-go-v2/api/models"
+	"github.com/tiyodev/api-rest-go-v2/api/responses"
 )
 
 // GetPeople : get people by id

@@ -7,7 +7,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite dialect
-	"github.com/tiyodev/api-rest-go-v1/api/controllers"
+	"github.com/tiyodev/api-rest-go-v2/api/controllers"
 )
 
 var server = controllers.Server{}

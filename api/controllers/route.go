@@ -1,6 +1,6 @@
 package controllers
 
-import "github.com/tiyodev/api-rest-go-v1/api/middlewares"
+import "github.com/tiyodev/api-rest-go-v2/api/middlewares"
 
 func (server *Server) initializeRoutes() {
 	// home route
