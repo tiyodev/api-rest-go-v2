@@ -33,10 +33,20 @@ func (server *Server) GetPeople(resWriter http.ResponseWriter, req *http.Request
 
 // GetPeoples : get all peoples with optional limit and offset
 func (server *Server) GetPeoples(resWriter http.ResponseWriter, req *http.Request) {
+	var limit uint64
+	var offset uint64
+	var err error
+
 	// Get Limit and Offset optional URL params
 	params := req.URL.Query()
-	limit, err := strconv.ParseUint(params.Get("limit"), 10, 64)
-	offset, err := strconv.ParseUint(params.Get("offset"), 10, 64)
+
+	if l := params.Get("limit"); l != "" {
+		limit, err = strconv.ParseUint(params.Get("limit"), 10, 64)
+	}
+
+	if o := params.Get("offset"); o != "" {
+		offset, err = strconv.ParseUint(params.Get("offset"), 10, 64)
+	}
 
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusInternalServerError, err)
@@ -66,19 +76,12 @@ func (server *Server) CreatePeople(resWriter http.ResponseWriter, req *http.Requ
 	// Generate default value
 	people.Prepare()
 
-	// init people with HTTP body params
+	// Init people with HTTP body params
 	err = json.Unmarshal(body, &people)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusUnprocessableEntity, err)
 		return
 	}
-
-	// Get last people ID
-	lastID, err := models.FindLastPeopleID(server.DB)
-
-	// Increment ID and URL
-	people.ID = lastID + 1
-	people.URL = lastID + 1
 
 	// Validate required values
 	err = people.Validate()
@@ -88,17 +91,24 @@ func (server *Server) CreatePeople(resWriter http.ResponseWriter, req *http.Requ
 	}
 
 	// Save new people in the DB
-	peopleCreated, err := people.SavePeople(server.DB)
+	err = people.SavePeople(server.DB)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusInternalServerError, err)
 		return
 	}
 
-	// Get created people
-	peopleCreated, err = models.FindPeopleByID(server.DB, peopleCreated.ID)
+	// URL must be the same as ID
+	people.URL = people.ID
+
+	// Update created people with URL as same as ID
+	err = people.UpdatePeople(server.DB, people.ID)
+	if err != nil {
+		responses.ERROR(resWriter, http.StatusInternalServerError, err)
+		return
+	}
 
 	// Return created people
-	responses.JSON(resWriter, http.StatusCreated, peopleCreated)
+	responses.JSON(resWriter, http.StatusCreated, people)
 }
 
 // UpdatePeople : Update people informations
@@ -120,8 +130,7 @@ func (server *Server) UpdatePeople(resWriter http.ResponseWriter, req *http.Requ
 	}
 
 	// Find the person to be modified
-	var people *models.People
-	people, err = models.FindPeopleByID(server.DB, uid)
+	people, err := models.FindPeopleByID(server.DB, uid)
 
 	// Set new values
 	err = json.Unmarshal(body, &people)
@@ -138,19 +147,18 @@ func (server *Server) UpdatePeople(resWriter http.ResponseWriter, req *http.Requ
 	}
 
 	// Update new people values
-	updatedUser, err := people.UpdatePeople(server.DB, uid)
+	err = people.UpdatePeople(server.DB, uid)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusInternalServerError, err)
 		return
 	}
 
-	responses.JSON(resWriter, http.StatusOK, updatedUser)
+	responses.JSON(resWriter, http.StatusOK, people)
 }
 
 // DeletePeople : remove people
 func (server *Server) DeletePeople(resWriter http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
-	people := models.People{}
 
 	// Get URL ID parameter
 	uid, err := strconv.ParseUint(vars["id"], 10, 64)
@@ -159,7 +167,7 @@ func (server *Server) DeletePeople(resWriter http.ResponseWriter, req *http.Requ
 		return
 	}
 
-	_, err = people.DeletePeople(server.DB, uid)
+	_, err = models.DeletePeople(server.DB, uid)
 	if err != nil {
 		responses.ERROR(resWriter, http.StatusInternalServerError, err)
 		return

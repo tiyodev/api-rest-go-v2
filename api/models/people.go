@@ -60,12 +60,6 @@ func (people *People) Validate() error {
 	if people.HomeworldID < 1 {
 		return errors.New("Required Homeworld")
 	}
-	if people.URL < 1 {
-		return errors.New("Required URL")
-	}
-	if people.ID < 1 {
-		return errors.New("Required ID")
-	}
 
 	if people.ID != people.URL {
 		return errors.New("ID and URL must be equal")
@@ -95,11 +89,11 @@ func FindPeopleByID(db *gorm.DB, uid uint64) (*People, error) {
 }
 
 // FindAllPeoples find all peoples
-func FindAllPeoples(db *gorm.DB, limit uint64, offset uint64) (*[]People, error) {
+func FindAllPeoples(db *gorm.DB, limit uint64, offset uint64) ([]People, error) {
 	var peoples []People
 
 	// Preload people relations and get all people
-	query := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(People{})
+	query := db.Debug().Preload("Homeworld").Preload("Films").Preload("Vehicles").Preload("Starships").Preload("Species").Model(&People{})
 
 	// Add limit filter if needed
 	if limit > 0 {
@@ -113,24 +107,24 @@ func FindAllPeoples(db *gorm.DB, limit uint64, offset uint64) (*[]People, error)
 
 	err := query.Find(&peoples).Error
 	if err != nil {
-		return &[]People{}, err
+		return []People{}, err
 	}
-	return &peoples, err
+	return peoples, err
 }
 
 // SavePeople create people
-func (people *People) SavePeople(db *gorm.DB) (*People, error) {
+func (people *People) SavePeople(db *gorm.DB) error {
 	var err error
 
 	err = db.Debug().Create(&people).Error
 	if err != nil {
-		return &People{}, err
+		return err
 	}
-	return people, nil
+	return nil
 }
 
 // UpdatePeople : Update people
-func (people *People) UpdatePeople(db *gorm.DB, uid uint64) (*People, error) {
+func (people *People) UpdatePeople(db *gorm.DB, uid uint64) error {
 
 	fmt.Println(people)
 
@@ -145,24 +139,25 @@ func (people *People) UpdatePeople(db *gorm.DB, uid uint64) (*People, error) {
 			"eye_color":   people.EyeColor,
 			"birth_year":  people.BirthYear,
 			"gender":      people.Gender,
+			"url":         people.URL,
 			"edited":      time.Now(),
 		},
 	)
 	if db.Error != nil {
-		return &People{}, db.Error
+		return db.Error
 	}
 	// This is the display of updated user
-	errors := db.Debug().Model(&People{}).Where("id = ?", uid).Take(&people).Error
+	errors := db.Debug().Model(&people).Where("id = ?", uid).Take(&people).Error
 	if errors != nil {
-		return &People{}, errors
+		return errors
 	}
-	return people, nil
+	return nil
 }
 
 // DeletePeople : Delete a people
-func (people *People) DeletePeople(db *gorm.DB, uid uint64) (int64, error) {
+func DeletePeople(db *gorm.DB, uid uint64) (int64, error) {
 
-	db = db.Debug().Model(&People{}).Where("id = ?", uid).Take(&people).Delete(&People{})
+	db = db.Debug().Model(&People{}).Where("id = ?", uid).Take(&People{}).Delete(&People{})
 
 	if db.Error != nil {
 		return 0, db.Error
