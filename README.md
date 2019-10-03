@@ -1,4 +1,4 @@
-# API REST in GOLANG
+# API REST in GOLANG V2
 * [Installation](#Installation)
 * [Dependencies](#Dependencies)
 * [API List](#api-list)
